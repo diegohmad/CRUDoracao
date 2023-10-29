@@ -25,8 +25,8 @@ public class CrudController {
 
     @PostMapping("contatos")
     public String inserirContatos(Contato contato,Model model) {
-        Contato contatoDb = dao.getContato(contato.getEmail());
-        if (contatoDb == null) {
+        // Contato contatoDb = dao.getContato(contato.getId());
+        if (contato.getId() == null) {
             dao.inserirContato(contato);
         } else {
             dao.updateContato(contato);
@@ -35,7 +35,7 @@ public class CrudController {
         return getContatos(model);
     }
 
-    @RequestMapping("contatosParametro")
+    @RequestMapping("contatosBusca")
     public String getContatos(@RequestParam(value = "nome", required = true) String nome, Model model) {
         model.addAttribute("contatos",dao.getContatos(nome));
         model.addAttribute("contato",new Contato());
@@ -44,14 +44,14 @@ public class CrudController {
     }
 
     @RequestMapping("excluirContato")
-    public String deleteContato(@RequestParam(value = "email", required = true) String email, Model model) {
-        dao.deleteContato(email);
+    public String deleteContato(@RequestParam(value = "id", required = true) Integer id, Model model) {
+        dao.deleteContato(id);
         return getContatos(model);
     }
 
     @RequestMapping("editarContato")
-    public String editarContato(@RequestParam(value = "email", required = true) String email, Model model) {
-        Contato contato = dao.getContato(email);
+    public String editarContato(@RequestParam(value = "id", required = true) Integer id, Model model) {
+        Contato contato = dao.getContato(id);
         model.addAttribute("contato", contato);
         model.addAttribute("contatos", dao.getContatos());
         model.addAttribute("edit",true);

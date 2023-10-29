@@ -1,15 +1,16 @@
-create database dbContatos;
+create database dbContatoOra;
 
-use dbContatos;
+use dbContatoOra;
 
 create table tb_contato(
+id Integer auto_increment primary KEY,
 nome varchar(255),
 sobrenome varchar(255),
 celular varchar(255),
-email varchar(255) primary KEY
+email varchar(255)
 );
 
-insert into tb_contato
+insert into tb_contato (nome, sobrenome, celular, email)
 values ('Gretchen','Cantora','11-9999-0000','gretchen@cantora.com.br'),
 ('João','Engenheiro','11-8888-1234','joao@engenheiro.com'),
 ('Maria','Professor','11-7777-5678','maria@professor.com'),
@@ -17,4 +18,4 @@ values ('Gretchen','Cantora','11-9999-0000','gretchen@cantora.com.br'),
 ('Ana','Advogada','11-5555-8765','ana@advogada.com'),
 ('Pedro','Arquiteto','11-4444-2345','pedro@arquiteto.com');
 
-select nome,sobrenome,celular,email from tb_contato;
+select id, nome,sobrenome,celular,email from tb_contato;

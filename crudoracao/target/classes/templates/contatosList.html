@@ -107,6 +107,9 @@ table td {
             <div class="principal">
                 <form class="form" method="POST" action="contatos" th:object="${contato}">
                     <div class="form-group">
+                        <input type="hidden" class="form-control" name="id" th:field="*{id}">
+                    </div>
+                    <div class="form-group">
                         <label class="form-label" for="nome">Nome</label>
                         <input type="text" class="form-control" name="nome" id="nome" th:field="*{nome}" required>
                     </div>
@@ -121,16 +124,16 @@ table td {
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="email">Email</label>
-                        <input type="email" th:field="*{email}" class="form-control" th:disabled="${edit == true}" name="email" aria-describedby="emailHelp">
+                        <input type="email" th:field="*{email}" class="form-control" name="email" aria-describedby="emailHelp">
                     </div>
                     <button type="submit" class="btn btn-info add-new">Enviar para a benção!</button>
                 </form>
                 <div class="principal">
-                    <form th:action="@{/contatosParametro}">
+                    <form th:action="@{/contatosBusca}">
                         <label class="form-label">Nome</label>
                         <input type="text" class="form-control" th:name="nome"
                             placeholder="Insira o Nome">
-                        <button type="submit" class="btn btn-info add-new">Pesquisar</button>
+                        <button type="submit" class="btn btn-info add-new">Pesquisar Abençoado</button>
                     </form>
                 </div>
             </div>
@@ -152,9 +155,9 @@ table td {
                             <td th:text="${contato.celular}"></td>
                             <td th:text="${contato.email}"></td>
                             <td>
-                                <a th:href="@{'/editarContato?email=' + ${contato.email}}" class="edit" title="Edit"
+                                <a th:href="@{'/editarContato?id=' + ${contato.id}}" class="edit" title="Edit"
                                     data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                <a th:href="@{'/excluirContato?email=' + ${contato.email}}" class="delete" title="Delete"
+                                <a th:href="@{'/excluirContato?id=' + ${contato.id}}" class="delete" title="Delete"
                                     data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                             </td>
                         </tr>

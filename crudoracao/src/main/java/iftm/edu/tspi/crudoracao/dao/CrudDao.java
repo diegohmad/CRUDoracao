@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import iftm.edu.tspi.crudoracao.domain.Contato;
 
+
 @Component
 public class CrudDao {
 
@@ -16,10 +17,11 @@ public class CrudDao {
     JdbcTemplate db;
 
     public List<Contato> getContatos() {
-        String sql = "select email, nome, sobrenome, celular from tb_contato";
+        String sql = "select id, email, nome, sobrenome, celular from tb_contato";
 
         return db.query(sql, (res, rowNum) -> {
             return new Contato(
+                    res.getInt("id"),
                     res.getString("nome"),
                     res.getString("sobrenome"),
                     res.getString("celular"),
@@ -28,19 +30,19 @@ public class CrudDao {
     }
 
     public List<Contato> getContatos(String nome) {
-        String sql = "select  nome, sobrenome, celular, email from tb_contato where lower(nome) like ?";
+        String sql = "select  id, nome, sobrenome, celular, email from tb_contato where lower(nome) like ?";
 
         return db.query(sql,
                 new BeanPropertyRowMapper<>(Contato.class),
                 new Object[] { "%" + nome + "%" });
     }
 
-    public Contato getContato(String email) {
-        String sql = "select  nome, sobrenome, celular, email from tb_contato where email = ?";
+    public Contato getContato(Integer id) {
+        String sql = "select  id, nome, sobrenome, celular, email from tb_contato where id = ?";
 
         List<Contato> contatos = db.query(sql,
                 new BeanPropertyRowMapper<>(Contato.class),
-                new Object[] { email });
+                new Object[] { id });
         if (contatos != null && contatos.size() > 0) {
             return contatos.get(0);
         } else {
@@ -55,14 +57,14 @@ public class CrudDao {
     }
 
     public void updateContato(Contato contato) {
-        String sql = "UPDATE tb_contato SET nome = ?, sobrenome = ?, celular = ? WHERE email = ?";
+        String sql = "UPDATE tb_contato SET nome = ?, sobrenome = ?, celular = ?, email = ? WHERE id = ?";
 
-        db.update(sql, new Object[] { contato.getNome(), contato.getSobrenome(), contato.getCelular(), contato.getEmail() });
+        db.update(sql, new Object[] { contato.getNome(), contato.getSobrenome(), contato.getCelular(), contato.getEmail(), contato.getId()});
     }
 
-    public void deleteContato(String email) {
-        String sql = "delete from tb_contato where email = ?";
+    public void deleteContato(Integer id) {
+        String sql = "delete from tb_contato where id = ?";
 
-        db.update(sql, new Object[] { email });
+        db.update(sql, new Object[] { id });
     }
 }

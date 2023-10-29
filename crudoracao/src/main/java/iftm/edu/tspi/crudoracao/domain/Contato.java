@@ -4,6 +4,7 @@ import lombok.Data;
 @Data
 public class Contato {
     
+    private Integer id;
     private String nome;
     private String sobrenome;
     private String celular;
@@ -12,7 +13,8 @@ public class Contato {
     public Contato() {
         
     }
-    public Contato(String nome, String sobrenome, String celular, String email) {
+    public Contato(Integer id, String nome, String sobrenome, String celular, String email) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.celular = celular;
